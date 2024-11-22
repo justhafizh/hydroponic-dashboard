@@ -1,20 +1,8 @@
-# BLOG ADVANCED WITH LARAVEL 10 TAILWINDCSS AND ADMINLTE3
+# HYDROPONIC DASHBOARD
 
 
 ## Description
 
----
-## Installation
-
---
-
-## DataBase
-
-----
-
-## Apps
-
----
 
 ## Usage
 
