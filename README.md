@@ -19,9 +19,9 @@
 ## Usage
 
 ```html
-$ git clone https://github.com/DanielArturoAlejoAlvarez/Blog-Advanced-With-Laravel10-TailwindCSS-And-AdminLTE3.git[NAME APP]
+$ gh repo clone justhafizh/hydroponic-dashboard
 
-$ npm install (Frontend)
+$ npm install
 
 $ npm run dev
 
