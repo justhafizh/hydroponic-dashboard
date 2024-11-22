@@ -19,7 +19,7 @@
 ## Usage
 
 ```html
-$ gh repo clone justhafizh/hydroponic-dashboard
+$ https://github.com/justhafizh/hydroponic-dashboard.git
 
 $ npm install
 
