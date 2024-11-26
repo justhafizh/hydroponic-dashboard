@@ -8,9 +8,9 @@
     "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "img/icons/flat-potted-plant-512.png",
+            "src": "src/img/flat-potted-plant-512.png",
             "type": "image/png",
-            "sizes": "72x72"
+            "sizes": "512x512"
         }
     ]
 }
