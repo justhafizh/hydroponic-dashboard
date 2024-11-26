@@ -69,3 +69,10 @@ app.get('/api/sensors', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+//register a service worke
+// if('serviceworker' in navigator){
+//   navigator.serviceWorker.register('/sw.js')
+//     .then((reg) => console.log('service worker registered', reg));
+//     .catch((err) => console.log('service worker not registered', err));
+// }
