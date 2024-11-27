@@ -4,67 +4,96 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sensor Dashboard</title>
-    <link href="src/output.css" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
+    <link href="src/output.css" rel="stylesheet" />
+    <link rel="manifest" href="manifest.json" />
     <!-- IOS support -->
-    <link rel="apple-toch-icon" href="src/img/flat-potted-plant-512.png">
-    <meta name="apple-mobile-web-app-status-bar" content="#9ccfa4">
+    <link rel="apple-toch-icon" href="src/img/flat-potted-plant-512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#9ccfa4" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
   </head>
-  <body class="bg-gray-100 text-gray-800 h-screen">
-    <!-- Navbar -->
-    <nav class="bg-blue-600 text-white">
-      <div class="container mx-auto flex items-center justify-between px-4 py-3">
-        <a class="flex items-center gap-2 text-lg font-bold" href="#">
-          <!-- <img src="https://cdn-icons-png.flaticon.com/512/1042/1042333.png" alt="Logo" class="w-8 h-8" /> -->
-          HYDROPONIC DASHBOARD
-        </a>
-      </div>
-    </nav>
+  <body class="bg-gray-900 text-gray-100 font-sans">
+    <div class="container mx-auto p-6">
+      <!-- Header -->
+      <header class="mb-6">
+        <h1 class="text-2xl font-bold text-center">IoT Hydroponic Monitoring Dashboard</h1>
+      </header>
+  
+      <!-- Dashboard Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Water Temperature -->
+        <div class="bg-gray-800 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Water Temperature</h2>
+          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+            <span id="waterTemp">Loading...</span>
+          </div>
+        </div>
 
-    <!-- Header -->
-    <header class="text-center py-8">
-      <h1 class="text-4xl font-extrabold text-blue-600">Sensor Dashboard</h1>
-      <p class="text-gray-600 mt-2">Memantau kondisi hidroponik secara real-time</p>
-    </header>
+        <!-- Humidity -->
+        <div class="bg-gray-800 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="cloud-rain" class="mr-2 text-blue-300"></i> Humidity</h2>
+          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+            <span id="humidity">Loading...</span>
+          </div>
+        </div>
 
-    <!-- Cards -->
-    <div class="container mx-auto grid gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
-      <!-- Suhu Larutan -->
-      <div class="card bg-white shadow-md rounded-lg p-6 text-center">
-        <h2 class="text-xl font-bold text-blue-600">Suhu Larutan</h2>
-        <p class="mt-4 text-lg text-gray-600" id="waterTemp">Loading...</p>
-      </div>
-      <!-- Kelembapan -->
-      <div class="card bg-white shadow-md rounded-lg p-6 text-center">
-        <h2 class="text-xl font-bold text-blue-600">Kelembapan</h2>
-        <p class="mt-4 text-lg text-gray-600" id="humidity">Loading...</p>
-      </div>
-      <!-- Suhu -->
-      <div class="card bg-white shadow-md rounded-lg p-6 text-center">
-        <h2 class="text-xl font-bold text-blue-600">Suhu</h2>
-        <p class="mt-4 text-lg text-gray-600" id="temperature">Loading...</p>
-      </div>
-      <!-- Ketinggian Air -->
-      <div class="card bg-white shadow-md rounded-lg p-6 text-center">
-        <h2 class="text-xl font-bold text-blue-600">Ketinggian Air</h2>
-        <p class="mt-4 text-lg text-gray-600" id="waterLevel">Loading...</p>
-      </div>
-      <!-- Kadar pH -->
-      <div class="card bg-white shadow-md rounded-lg p-6 text-center">
-        <h2 class="text-xl font-bold text-blue-600">Kadar pH</h2>
-        <p class="mt-4 text-lg text-gray-600" id="phLevel">Loading...</p>
-      </div>
-      <!-- Kadar Nutrisi -->
-      <div class="card bg-white shadow-md rounded-lg p-6 text-center">
-        <h2 class="text-xl font-bold text-blue-600">Kadar Nutrisi</h2>
-        <p class="mt-4 text-lg text-gray-600" id="nutrient">Loading...</p>
+        <!-- Temperature -->
+        <div class="bg-gray-800 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Temperature</h2>
+          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+            <span id="temperature">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Water Level -->
+        <div class="bg-gray-800 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="droplet" class="mr-2 text-blue-500"></i> Water Level</h2>
+          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+            <span id="waterLevel">Loading...</span>
+          </div>
+        </div>
+
+        <!-- pH Level -->
+        <div class="bg-gray-800 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="activity" class="mr-2 text-yellow-500"></i> pH Level</h2>
+          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+            <span id="phLevel">Loading...</span></p>
+          </div>
+        </div>
+        
+        <!-- Nutrients -->
+        <div class="bg-gray-800 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="droplet" class="mr-2 text-green-500"></i> Nutrients</h2>
+          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+            <span id="nutrient">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Pump States -->
+        <div class="bg-gray-800 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="zap" class="mr-2 text-yellow-500"></i> Pump States</h2>
+          <div class="flex justify-between">
+            <div class="flex flex-col items-center">
+              <p class="font-semibold text-sm">Pump 1</p>
+              <span class="text-xl text-green-500">ON</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <p class="font-semibold text-sm">Pump 2</p>
+              <span class="text-xl text-red-500">OFF</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <p class="font-semibold text-sm">Pump 3</p>
+              <span class="text-xl text-green-500">ON</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <p class="font-semibold text-sm">Pump 4</p>
+              <span class="text-xl text-red-500">OFF</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white py-4 mt-12 absolute bottom-0 left-0 right-0">
-      <div class="container mx-auto text-center text-sm">&copy; 2024 Hydroponic Dashboard | All Rights Reserved</div>
-    </footer>
+    <script src="script.js"></script>
   </body>
 </html>
-

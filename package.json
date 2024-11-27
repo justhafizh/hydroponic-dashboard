@@ -5,7 +5,7 @@
   "main": "apimqtt.js",
   "scripts": {
     "start": "node app.js",
-    "tailwind" :"npx tailwindcss -i public/src/input.css -o public/src/output.css --watch",
+    "tailwind": "npx tailwindcss -i public/src/input.css -o public/src/output.css --watch",
     "dev": "nodemon app.js"
   },
   "keywords": [],
@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
-    "mqtt": "^5.10.1"
+    "mqtt": "^5.10.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

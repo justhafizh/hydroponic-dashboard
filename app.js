@@ -14,28 +14,39 @@ let sensorData = {
   phLevel: null,
   nutrient: null,
 };
+var options = {
+  host: 'e7f3b9b0f9454fda937c059e7bb8363a.s1.eu.hivemq.cloud',
+  port: 8883,
+  protocol: 'mqtts',
+  username: 'justhafizh_',
+  password: 'BiarkanDuniaT4u'
+}
 
-// Hubungkan ke broker MQTT
-// const mqttClient = mqtt.connect('mqtt://e7f3b9b0f9454fda937c059e7bb8363a.s1.eu.hivemq.cloud'); // Ubah dengan broker Anda
-const mqttClient = mqtt.connect('mqtt://broker.hivemq.com:8884'); // Ubah dengan broker Anda
+var mqttClient = mqtt.connect(options);
 
 // Langganan ke topik sensor
 mqttClient.on('connect', () => {
   console.log('Connected to MQTT broker');
-  
+
   mqttClient.subscribe('sensor/waterTemp');
   mqttClient.subscribe('sensor/humidity');
   mqttClient.subscribe('sensor/temperature');
   mqttClient.subscribe('sensor/waterLevel');
   mqttClient.subscribe('sensor/phLevel');
   mqttClient.subscribe('sensor/nutrient');
+
+  console.log('Subscribed to all sensor topics');
+});
+
+mqttClient.on('error', function (error) {
+  console.log(error);
 });
 
 mqttClient.on('message', (topic, message) => {
   const data = message.toString();
 
   switch (topic) {
-    case 'sensor/waterTemp': //case base on topic
+    case 'sensor/waterTemp': 
       sensorData.waterTemp = data;
       break;
     case 'sensor/humidity':
@@ -67,13 +78,11 @@ app.get('/api/sensors', (req, res) => {
   res.json(sensorData);
 });
 
+// Membuat halaman indexx
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/indexx.html'));
+});
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-//register a service worke
-// if('serviceworker' in navigator){
-//   navigator.serviceWorker.register('/sw.js')
-//     .then((reg) => console.log('service worker registered', reg));
-//     .catch((err) => console.log('service worker not registered', err));
-// }
