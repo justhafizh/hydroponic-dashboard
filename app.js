@@ -16,7 +16,8 @@ let sensorData = {
 };
 
 // Hubungkan ke broker MQTT
-const mqttClient = mqtt.connect('mqtt://e7f3b9b0f9454fda937c059e7bb8363a.s1.eu.hivemq.cloud'); // Ubah dengan broker Anda
+// const mqttClient = mqtt.connect('mqtt://e7f3b9b0f9454fda937c059e7bb8363a.s1.eu.hivemq.cloud'); // Ubah dengan broker Anda
+const mqttClient = mqtt.connect('mqtt://broker.hivemq.com:8884'); // Ubah dengan broker Anda
 
 // Langganan ke topik sensor
 mqttClient.on('connect', () => {

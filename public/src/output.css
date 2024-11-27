@@ -588,6 +588,26 @@ video {
   }
 }
 
+.static {
+  position: static;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.left-0 {
+  left: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -615,6 +635,10 @@ video {
 
 .h-8 {
   height: 2rem;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .w-8 {
