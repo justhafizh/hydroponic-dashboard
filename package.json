@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
+    "http": "^0.0.1-security",
     "mqtt": "^5.10.3"
   },
   "devDependencies": {
