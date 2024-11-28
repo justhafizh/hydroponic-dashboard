@@ -1,5 +1,15 @@
 {
     "version": 2,
+    "builds": [
+      {
+        "src": "app.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "src/**/*.css",
+        "use": "@vercel/static-build"
+      }
+    ],
     "routes": [
       {
         "src": "/(.*)",
@@ -7,3 +17,4 @@
       }
     ]
   }
+  
