@@ -4,8 +4,7 @@
   "description": "",
   "main": "apimqtt.js",
   "scripts": {
-    "start": "node app.js",
-    "tailwind": "npx tailwindcss -i public/src/input.css -o public/src/output.css --watch",
+    "start": "node app.js && npx tailwindcss -i public/src/input.css -o public/src/output.css --watch",
     "dev": "nodemon app.js"
   },
   "keywords": [],
