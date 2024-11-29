@@ -4,10 +4,10 @@
   "description": "",
   "main": "apimqtt.js",
   "scripts": {
-    "build:css": "tailwindcss -i public/src/input.css -o public/src/output.css --minify",
+    "build:css": "tailwindcss -i public/src/input.css -o public/output.css --minify",
     "start": "node app.js ",
-    "tailwind": "npx tailwindcss -i public/src/input.css -o public/src/output.css --watch",
-    "build": "npm run build:css && node app.js",
+    "tailwind": "npx tailwindcss -i public/src/input.css -o public/output.css --watch",
+    "build": "npm run build:css && node app.js", 
     "dev": "nodemon app.js"
   },
   "keywords": [],
