@@ -1,5 +1,18 @@
 {
     "version": 2,
+    "builds": [
+      {
+        "src": "app.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "public/**/*",
+        "use": "@vercel/static-build",
+        "config": {
+          "buildCommand": "npx tailwindcss -i public/src/input.css -o public/src/output.css --minify"
+        }
+      }
+    ],
     "routes": [
       {
         "src": "/(.*)",
