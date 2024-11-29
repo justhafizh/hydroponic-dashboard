@@ -2,7 +2,7 @@
 
 
 ## Description
-view on : https://hydroponic-dashboard-zcsw.vercel.app
+view on : https://hydroponic-dashboard.vercel.app
 
 ## Usage
 
