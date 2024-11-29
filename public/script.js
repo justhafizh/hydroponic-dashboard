@@ -1,5 +1,6 @@
 // Initialize Feather Icons
 feather.replace();
+
 // Ambil data dari server
 let lastUpdate = {
   waterTemp: 0,
@@ -20,50 +21,58 @@ function getData() {
       if (data.waterTemp != null) {
         $("#waterTemp").text(data.waterTemp + " C");
         lastUpdate.waterTemp = currentTime; // Simpan waktu update
-      } else if (currentTime - lastUpdate.waterTemp > 5000) {
-        // Hapus data jika lebih dari 5 detik
-        $("#waterTemp").text("Loading...");
       }
-      
+
       if (data.humidity != null) {
         $("#humidity").text(data.humidity + " %");
         lastUpdate.humidity = currentTime;
-      } else if (currentTime - lastUpdate.humidity > 5000) {
-        $("#humidity").text("Loading...");
       }
 
       if (data.temperature != null) {
         $("#temperature").text(data.temperature + " C");
         lastUpdate.temperature = currentTime;
-      } else if (currentTime - lastUpdate.temperature > 5000) {
-        $("#temperature").text("Loading...");
       }
 
       if (data.waterLevel != null) {
         $("#waterLevel").text(data.waterLevel + " cm");
         lastUpdate.waterLevel = currentTime;
-      } else if (currentTime - lastUpdate.waterLevel > 5000) {
-        $("#waterLevel").text("Loading...");
       }
 
       if (data.phLevel != null) {
         $("#phLevel").text(data.phLevel);
         lastUpdate.phLevel = currentTime;
-      } else if (currentTime - lastUpdate.phLevel > 5000) {
-        $("#phLevel").text("Loading...");
       }
 
       if (data.nutrient != null) {
         $("#nutrient").text(data.nutrient + " %");
         lastUpdate.nutrient = currentTime;
-      } else if (currentTime - lastUpdate.nutrient > 5000) {
-        $("#nutrient").text("Loading...");
       }
     },
     error: function (err) {
       console.error("Failed to fetch sensor data:", err);
     },
   });
+
+  // Cek apakah data lama sudah lebih dari 3 detik
+  if (currentTime - lastUpdate.waterTemp > 3000) {
+    $("#waterTemp").text("Loading...");
+  }
+  if (currentTime - lastUpdate.humidity > 3000) {
+    $("#humidity").text("Loading...");
+  }
+  if (currentTime - lastUpdate.temperature > 3000) {
+    $("#temperature").text("Loading...");
+  }
+  if (currentTime - lastUpdate.waterLevel > 3000) {
+    $("#waterLevel").text("Loading...");
+  }
+  if (currentTime - lastUpdate.phLevel > 3000) {
+    $("#phLevel").text("Loading...");
+  }
+  if (currentTime - lastUpdate.nutrient > 3000) {
+    $("#nutrient").text("Loading...");
+  }
 }
+
 // Panggil fungsi getData setiap 0,1 detik
 setInterval(getData, 100);
