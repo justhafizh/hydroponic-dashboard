@@ -9,7 +9,7 @@
         "src": "public/**/*",
         "use": "@vercel/static-build",
         "config": {
-          "buildCommand": "npx tailwindcss -i public/src/input.css -o public/src/output.css --minify"
+          "buildCommand": "npx tailwindcss -i public/src/input.css -o public/output.css --minify"
         }
       }
     ],
