@@ -12,9 +12,8 @@ let lastUpdate = {
 function getData() {
   const currentTime = Date.now(); // Waktu saat ini dalam milidetik
   $.ajax({
-    // url: "/api/sensors",
-    url: "https://hydroponic-dashboard-zcsw.vercel.app/api/sensors",
-
+    url: "/api/sensors",
+    // url: "https://hydroponic-dashboard-zcsw.vercel.app/api/sensors",
     type: "GET",
     success: function (data) {
       // Update data hanya jika data tidak null dan data baru diterima
