@@ -3,7 +3,8 @@ const mqtt = require('mqtt');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+//const port = 3000;
+const port = 5000;
 
 // Data untuk menyimpan nilai dari 6 sensor dan timestamp masing-masing
 let sensorData = {
@@ -102,5 +103,6 @@ app.get('/dashboard', (req, res) => {
 
 // Jalankan server
 app.listen(port, () => {
+  console.log(`Server running at http://10.148.0.5:${port}`);
   console.log(`Server running at http://localhost:${port}`);
 });
