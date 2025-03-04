@@ -104,5 +104,5 @@ app.get('/dashboard', (req, res) => {
 // Jalankan server
 app.listen(port, () => {
   console.log(`Server running at http://10.148.0.5:${port}`);
-  console.log(`Server running at http://localhost:${port}`);
+  // console.log(`Server running at http://localhost:${port}`);
 });
