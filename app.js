@@ -1,109 +1,90 @@
-const express = require('express');
-const mqtt = require('mqtt');
-const path = require('path');
+const express = require("express");
+const mqtt = require("mqtt");
+const path = require("path");
 
 const app = express();
-//const port = 3000;
 const port = 5000;
-const host = '0.0.0.0';
+const host = "127.0.0.1";
 
-// Data untuk menyimpan nilai dari 6 sensor dan timestamp masing-masing
-let sensorData = {
-  waterTemp: { value: null, timestamp: 0 },
-  humidity: { value: null, timestamp: 0 },
-  temperature: { value: null, timestamp: 0 },
-  waterLevel: { value: null, timestamp: 0 },
-  phLevel: { value: null, timestamp: 0 },
-  nutrient: { value: null, timestamp: 0 },
-};
+// Objek buat nyimpen semua data sensor
+let sensorData = {};
+let lastReceivedTime = {};
 
+// MQTT broker config
 const options = {
-  host: 'e7f3b9b0f9454fda937c059e7bb8363a.s1.eu.hivemq.cloud',
+  host: "e7f3b9b0f9454fda937c059e7bb8363a.s1.eu.hivemq.cloud",
   port: 8883,
-  protocol: 'mqtts',
-  username: 'justhafizh_',
-  password: 'BiarkanDuniaT4u',
+  protocol: "mqtts",
+  username: "hydroponic_dashboard",
+  password: "bombomBASS123",
 };
 
+// Koneksi ke broker
 const mqttClient = mqtt.connect(options);
 
-// Langganan ke topik sensor
-mqttClient.on('connect', () => {
-  console.log('Connected to MQTT broker');
+// List topik sensor
+const topics = [
+  "iot/hydroponic/01/sensors",
+  "iot/hydroponic/02/sensors"
+];
 
-  mqttClient.subscribe('sensor/waterTemp');
-  mqttClient.subscribe('sensor/humidity');
-  mqttClient.subscribe('sensor/temperature');
-  mqttClient.subscribe('sensor/waterLevel');
-  mqttClient.subscribe('sensor/phLevel');
-  mqttClient.subscribe('sensor/nutrient');
-
-  console.log('Subscribed to all sensor topics');
+// Subscribe ke semua topik
+mqttClient.on("connect", () => {
+  console.log("Connected to MQTT broker");
+  mqttClient.subscribe(topics);
+  topics.forEach((topic) => {
+    console.log("Subscribed to: ", topic);
+  });
 });
 
-mqttClient.on('error', function (error) {
-  console.log(error);
-});
+// Handle pesan
+mqttClient.on("message", (topic, message) => {
+  try {
+    const data = JSON.parse(message.toString());
 
-mqttClient.on('message', (topic, message) => {
-  const data = message.toString();
-  const timestamp = Date.now(); // Waktu saat data diterima
+    // Ambil device id dari topic: sensor_1, sensor_2, dll
+    const parts = topic.split("/");
+    const deviceId = "sensor_" + parts[2];
 
-  switch (topic) {
-    case 'sensor/waterTemp':
-      sensorData.waterTemp = { value: data, timestamp };
-      break;
-    case 'sensor/humidity':
-      sensorData.humidity = { value: data, timestamp };
-      break;
-    case 'sensor/temperature':
-      sensorData.temperature = { value: data, timestamp };
-      break;
-    case 'sensor/waterLevel':
-      sensorData.waterLevel = { value: data, timestamp };
-      break;
-    case 'sensor/phLevel':
-      sensorData.phLevel = { value: data, timestamp };
-      break;
-    case 'sensor/nutrient':
-      sensorData.nutrient = { value: data, timestamp };
-      break;
-    default:
-      console.log(`No handler for topic ${topic}`);
+    // Simpan datanya
+    sensorData[deviceId] = data;
+    lastReceivedTime[deviceId] = Date.now();
+
+    // console.log(`Data dari ${deviceId}:`, data);
+    console.log(sensorData);
+  } catch (err) {
+    console.log("Error parsing message:", err);
   }
-  console.log(`Received message from ${topic}: ${data}`);
 });
 
-// Fungsi untuk menghapus data yang lebih lama dari 3 detik
-function clearOldData() {
-  const now = Date.now();
-  Object.keys(sensorData).forEach((key) => {
-    if (now - sensorData[key].timestamp > 3000) {
-      sensorData[key].value = null; // Hapus data jika lebih dari 3 detik
-    }
-  });
-}
+// Serve static file
+app.use(express.static(path.join(__dirname, "public")));
 
-// Melayani file statis dari folder 'public'
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Membuat API untuk mendapatkan data sensor
-app.get('/api/sensors', (req, res) => {
-  clearOldData(); // Bersihkan data lama sebelum mengirimkan respon
-  const responseData = {};
-  Object.keys(sensorData).forEach((key) => {
-    responseData[key] = sensorData[key].value; // Hanya kirim nilai
-  });
-  res.json(responseData);
+// API endpoint
+app.get("/api/sensors", (req, res) => {
+  res.json(sensorData);
 });
 
-// Membuat halaman dashboard
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/indexx.html'));
+// Dashboard page
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// Jalankan server
+// Start server
 app.listen(port, () => {
-  console.log(`Server running at http://${host}:${port}`);
-  // console.log(`Server running at http://localhost:${port}`);
+  console.log(`🚀 Server running at http://${host}:${port}`);
 });
+
+// Cek setiap 5 detik
+setInterval(() => {
+  const now = Date.now();
+  const timeout = 5 * 1000; // 10 detik
+
+  for (const deviceId in lastReceivedTime) {
+    if (now - lastReceivedTime[deviceId] > timeout) {
+      console.log(`Data from ${deviceId} timeout, reset...`);
+      delete sensorData[deviceId];
+      delete lastReceivedTime[deviceId];
+    }
+  }
+}, 5000);

@@ -14,19 +14,64 @@
     <script src="https://unpkg.com/feather-icons"></script>
   </head>
   <body class="bg-gray-900 text-gray-100 font-sans">
+    <nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
+      <div class="text-xl font-bold">Hydroponic</div>
+      <!-- Menu desktop -->
+      <ul class="md:flex space-x-6">
+        <li><button id="toggleLog" class="hover:font-bold">Device Log</button></li>
+      </ul>
+    </nav>
+    <!-- Floating Card Container -->
+    <div id="logCard" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white text-black p-6 rounded-xl shadow-xl w-full max-w-4xl space-y-4">
+        <h2 class="text-2xl font-bold mb-4 text-center">Device Logs</h2>
+
+        <!-- Card 1 -->
+        <div class="bg-gray-100 p-4 rounded-lg shadow space-y-2">
+          <h3 class="font-bold text-lg">Device ID: 01</h3>
+          <p class="text-sm" id="IPDevice_1"></p>
+          <p class="text-sm" id="IPGateway_1"></p>
+
+          <div class="bg-white border rounded p-2 mt-2 h-24 overflow-y-auto text-xs font-mono">
+            <ul id="jsonData1">
+              <!-- JSON logs will go here -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-gray-100 p-4 rounded-lg shadow space-y-2">
+          <h3 class="font-bold text-lg">Device ID: 02</h3>
+          <p class="text-sm" id="IPDevice_2"></p>
+          <p class="text-sm"  id="IPGateway_2"></p>
+
+          <div class="bg-white border rounded p-2 mt-2 h-24 overflow-y-auto text-xs font-mono">
+            <ul id="jsonData2">
+              <!-- JSON logs will go here -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Close button -->
+        <div class="flex justify-end">
+          <button id="closeLog" class="mt-2 text-sm text-blue-600 hover:underline">Close</button>
+        </div>
+      </div>
+    </div>
     <div class="container mx-auto p-6">
       <!-- Header -->
       <header class="mb-6">
         <h1 class="text-2xl font-bold text-center">IoT Hydroponic Monitoring Dashboard</h1>
+        <p class="text-sm text-center" ><span id="time"></span></p>
       </header>
   
       <!-- Dashboard Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Water Temperature -->
+      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <!-- Temperature -->
         <div class="bg-gray-800 p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Water Temperature</h2>
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Temperature</h2>
           <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
-            <span id="waterTemp">Loading...</span>
+            <span id="temperature">Loading...</span>
           </div>
         </div>
 
@@ -38,58 +83,35 @@
           </div>
         </div>
 
-        <!-- Temperature -->
+        <!-- Pressure -->
         <div class="bg-gray-800 p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Temperature</h2>
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="download-cloud" class="mr-2 text-gray-300"></i> Pressure</h2>
           <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
-            <span id="temperature">Loading...</span>
+            <span id="pressure">Loading...</span>
           </div>
         </div>
 
-        <!-- Water Level -->
+        <!-- Water Temperature -->
         <div class="bg-gray-800 p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="droplet" class="mr-2 text-blue-500"></i> Water Level</h2>
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Water Temperature</h2>
           <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
-            <span id="waterLevel">Loading...</span>
+            <span id="water_temperature">Loading...</span>
           </div>
         </div>
 
         <!-- pH Level -->
         <div class="bg-gray-800 p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="activity" class="mr-2 text-yellow-500"></i> pH Level</h2>
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="triangle" class="mr-2" color="#a432a8"></i> pH Level</h2>
           <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
-            <span id="phLevel">Loading</span></p>
-          </div>
-        </div>
-        
-        <!-- Nutrients -->
-        <div class="bg-gray-800 p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="droplet" class="mr-2 text-green-500"></i> Nutrients</h2>
-          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
-            <span id="nutrient">Loading...</span>
+            <span id="ph_value">Loading...</span>
           </div>
         </div>
 
-        <!-- Pump States -->
+        <!-- Tds Value -->
         <div class="bg-gray-800 p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="zap" class="mr-2 text-yellow-500"></i> Pump States</h2>
-          <div class="flex justify-between">
-            <div class="flex flex-col items-center">
-              <p class="font-semibold text-sm">Pump 1</p>
-              <span class="text-xl text-green-500">ON</span>
-            </div>
-            <div class="flex flex-col items-center">
-              <p class="font-semibold text-sm">Pump 2</p>
-              <span class="text-xl text-red-500">OFF</span>
-            </div>
-            <div class="flex flex-col items-center">
-              <p class="font-semibold text-sm">Pump 3</p>
-              <span class="text-xl text-green-500">ON</span>
-            </div>
-            <div class="flex flex-col items-center">
-              <p class="font-semibold text-sm">Pump 4</p>
-              <span class="text-xl text-red-500">OFF</span>
-            </div>
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="pie-chart" class="mr-2" color="#32a852"></i> Nutrient Level</h2>
+          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+            <span id="tds_value">Loading...</span>
           </div>
         </div>
       </div>
