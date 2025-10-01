@@ -6,16 +6,18 @@
   "scripts": {
     "build:css": "tailwindcss -i public/src/input.css -o public/output.css --minify",
     "start": "node app.js ",
-    "build": "npm run build:css && node app.js", 
+    "build": "npm run build:css && node app.js",
     "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^4.21.1",
     "http": "^0.0.1-security",
-    "mqtt": "^5.10.3"
+    "mqtt": "^5.10.3",
+    "nodemon": "^3.1.10"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
