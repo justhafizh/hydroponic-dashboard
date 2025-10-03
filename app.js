@@ -2,9 +2,11 @@ const express = require("express");
 const mqtt = require("mqtt");
 const path = require("path");
 
+require('dotenv').config();
+
 const app = express();
-const port = 5000;
-const host = "127.0.0.1";
+const port = process.env.PORT;
+const host = process.env.HOST;
 
 // Objek buat nyimpen semua data sensor
 let sensorData = {};
@@ -12,11 +14,11 @@ let lastReceivedTime = {};
 
 // MQTT broker config
 const options = {
-  host: "e7f3b9b0f9454fda937c059e7bb8363a.s1.eu.hivemq.cloud",
-  port: 8883,
-  protocol: "mqtts",
-  username: "hydroponic_dashboard",
-  password: "bombomBASS123",
+  host: process.env.MQTT_BROKER_URL,
+  port: process.env.MQTT_BROKER_PORT,
+  protocol: "mqtt",
+  username: process.env.MQTT_USERNAME,
+  password: process.env.MQTT_PASSWORD,
 };
 
 // Koneksi ke broker
@@ -24,8 +26,8 @@ const mqttClient = mqtt.connect(options);
 
 // List topik sensor
 const topics = [
-  "iot/hydroponic/01/sensors",
-  "iot/hydroponic/02/sensors"
+  process.env.MQTT_TOPIC_1,
+  process.env.MQTT_TOPIC_2
 ];
 
 // Subscribe ke semua topik
@@ -78,7 +80,7 @@ app.listen(port, () => {
 // Cek setiap 5 detik
 setInterval(() => {
   const now = Date.now();
-  const timeout = 5 * 1000; // 10 detik
+  const timeout = 5 * 1000; 
 
   for (const deviceId in lastReceivedTime) {
     if (now - lastReceivedTime[deviceId] > timeout) {

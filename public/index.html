@@ -13,14 +13,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
   </head>
-  <body class="bg-gray-900 text-gray-100 font-sans">
-    <nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
+  <body class="bg-white text-gray-900 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-gray-100 text-gray-900 p-4 flex justify-between items-center">
       <div class="text-xl font-bold">Hydroponic</div>
       <!-- Menu desktop -->
       <ul class="md:flex space-x-6">
         <li><button id="toggleLog" class="hover:font-bold">Device Log</button></li>
       </ul>
     </nav>
+
     <!-- Floating Card Container -->
     <div id="logCard" class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div class="bg-white text-black p-6 rounded-xl shadow-xl w-full max-w-4xl space-y-4 mx-4 sm:mx-auto">
@@ -33,9 +35,7 @@
           <p class="text-sm" id="IPGateway_1"></p>
 
           <div class="bg-white border rounded p-2 mt-2 h-24 overflow-y-auto text-xs font-mono">
-            <ul id="jsonData1">
-              <!-- JSON logs will go here -->
-            </ul>
+            <ul id="jsonData1"></ul>
           </div>
         </div>
 
@@ -43,12 +43,10 @@
         <div class="bg-gray-100 p-4 rounded-lg shadow space-y-2">
           <h3 class="font-bold text-lg">Device ID: 02</h3>
           <p class="text-sm" id="IPDevice_2"></p>
-          <p class="text-sm"  id="IPGateway_2"></p>
+          <p class="text-sm" id="IPGateway_2"></p>
 
           <div class="bg-white border rounded p-2 mt-2 h-24 overflow-y-auto text-xs font-mono">
-            <ul id="jsonData2">
-              <!-- JSON logs will go here -->
-            </ul>
+            <ul id="jsonData2"></ul>
           </div>
         </div>
 
@@ -58,64 +56,67 @@
         </div>
       </div>
     </div>
+
+    <!-- Main Content -->
     <div class="container mx-auto p-6">
       <!-- Header -->
       <header class="mb-6">
         <h1 class="text-2xl font-bold text-center">IoT Hydroponic Monitoring Dashboard</h1>
-        <p class="text-sm text-center" ><span id="time"></span></p>
+        <p class="text-sm text-center"><span id="time"></span></p>
       </header>
-  
+
       <!-- Dashboard Grid -->
       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <!-- Temperature -->
-        <div class="bg-gray-800 p-4 rounded-lg shadow">
+        <div class="bg-gray-100 p-4 rounded-lg shadow">
           <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Temperature</h2>
-          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+          <div class="h-32 flex items-center justify-center bg-white rounded">
             <span id="temperature">Loading...</span>
           </div>
         </div>
 
         <!-- Humidity -->
-        <div class="bg-gray-800 p-4 rounded-lg shadow">
+        <div class="bg-gray-100 p-4 rounded-lg shadow">
           <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="cloud-rain" class="mr-2 text-blue-300"></i> Humidity</h2>
-          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+          <div class="h-32 flex items-center justify-center bg-white rounded">
             <span id="humidity">Loading...</span>
           </div>
         </div>
 
         <!-- Pressure -->
-        <div class="bg-gray-800 p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="download-cloud" class="mr-2 text-gray-300"></i> Pressure</h2>
-          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+        <div class="bg-gray-100 p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="download-cloud" class="mr-2 text-gray-400"></i> Pressure</h2>
+          <div class="h-32 flex items-center justify-center bg-white rounded">
             <span id="pressure">Loading...</span>
           </div>
         </div>
 
         <!-- Water Temperature -->
-        <div class="bg-gray-800 p-4 rounded-lg shadow">
+        <div class="bg-gray-100 p-4 rounded-lg shadow">
           <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="thermometer" class="mr-2 text-red-500"></i> Water Temperature</h2>
-          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+          <div class="h-32 flex items-center justify-center bg-white rounded">
             <span id="water_temperature">Loading...</span>
           </div>
         </div>
 
         <!-- pH Level -->
-        <div class="bg-gray-800 p-4 rounded-lg shadow">
+        <div class="bg-gray-100 p-4 rounded-lg shadow">
           <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="triangle" class="mr-2" color="#a432a8"></i> pH Level</h2>
-          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+          <div class="h-32 flex items-center justify-center bg-white rounded">
             <span id="ph_value">Loading...</span>
           </div>
         </div>
 
-        <!-- Tds Value -->
-        <div class="bg-gray-800 p-4 rounded-lg shadow">
+        <!-- TDS Value -->
+        <div class="bg-gray-100 p-4 rounded-lg shadow">
           <h2 class="text-lg font-bold mb-2 flex items-center"><i data-feather="pie-chart" class="mr-2" color="#32a852"></i> Nutrient Level</h2>
-          <div class="h-32 flex items-center justify-center bg-gray-700 rounded">
+          <div class="h-32 flex items-center justify-center bg-white rounded">
             <span id="tds_value">Loading...</span>
           </div>
         </div>
       </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
