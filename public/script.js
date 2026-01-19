@@ -34,15 +34,56 @@ function getData() {
     type: "GET",
     success: function (sensorData) {
       const now = new Date();
-              // Update last received time
-        $("#time").text("Time: " + now.toLocaleTimeString());
+      // Update last received time
+      $("#time").text("Time: " + now.toLocaleTimeString());
       // SENSOR 01
       if (sensorData.sensor_01) {
         const s1 = sensorData.sensor_01;
         // Update UI
         $("#water_temperature").text(s1.water_temperature);
         $("#ph_value").text(s1.ph_value);
-        $("#tds_value").text(s1.tds_value);  
+        $("#tds_value").text(s1.tds_value);
+
+        // Update pH Status
+        const ph = parseFloat(s1.ph_value);
+        let phStatus = "";
+        let phClass = "";
+        if (ph < 6.0) {
+          phStatus = "pH Low";
+          phClass = "bg-red-100 text-red-600";
+        } else if (ph >= 6.0 && ph <= 7.0) {
+          phStatus = "pH Neutral";
+          phClass = "bg-green-100 text-green-600";
+        } else if (ph > 7.0) {
+          phStatus = "pH High";
+          phClass = "bg-red-500 text-white";
+        }
+        if (phStatus) {
+          $("#ph_status").text(phStatus).attr("class", `text-[10px] font-bold px-2 py-0.5 rounded-full bg-white-200 ${phClass}`).removeClass("hidden");
+        } else {
+          $("#ph_status").addClass("hidden");
+        }
+
+        // Update Nutrient Status
+        const tds = parseFloat(s1.tds_value);
+        let tdsStatus = "";
+        let tdsClass = "";
+        if (tds < 400) {
+          tdsStatus = "Nutrient Low";
+          tdsClass = "bg-yellow-100 text-yellow-600";
+        } else if (tds >= 400 && tds <= 1000) {
+          tdsStatus = "Nutrient Good";
+          tdsClass = "bg-green-100 text-green-600";
+        } else if (tds > 1000) {
+          tdsStatus = "Nutrient High";
+          tdsClass = "bg-red-100 text-red-600";
+        }
+        if (tdsStatus) {
+          $("#tds_status").text(tdsStatus).attr("class", `text-[10px] font-bold px-2 py-0.5 rounded-full ${tdsClass}`).removeClass("hidden");
+        } else {
+          $("#tds_status").addClass("hidden");
+        }
+
         // Update label info
         $("#deviceId1").text("Device ID: " + (s1.device_id || "Unknown"));
         $("#IPDevice_1").text("IP Device: " + (s1.IPDevice || "N/A"));
@@ -55,6 +96,8 @@ function getData() {
         $("#water_temperature").text("Loading...");
         $("#ph_value").text("Loading...");
         $("#tds_value").text("Loading...");
+        $("#ph_status").text("Loading...").attr("class", "text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-200 text-gray-500");
+        $("#tds_status").text("Loading...").attr("class", "text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-200 text-gray-500");
         $("#deviceId1").text("Device ID: -");
         $("#IPDevice_1").text("IP Device: -");
         $("#IPGateway_1").text("Device Gateway: -");
@@ -66,9 +109,9 @@ function getData() {
         const s2 = sensorData.sensor_02;
 
         // Update UI
-        $("#temperature").text( s2.temperature);
+        $("#temperature").text(s2.temperature);
         $("#humidity").text(s2.humidity);
-        $("#pressure").text(s2.pressure);  
+        $("#pressure").text(s2.pressure);
 
         $("#deviceId2").text("Device ID: " + (s2.device_id || "Unknown"));
         $("#IPDevice_2").text("IP Device: " + (s2.IPDevice || "N/A"));
